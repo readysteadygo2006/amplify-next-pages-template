@@ -17,6 +17,6 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx","amplify/data/resource.ts",
-    "amplify/function/api-function/resource.ts",],
+    "amplify/function/data-access/resource.ts",],
   "exclude": ["node_modules", "amplify"]
 }
