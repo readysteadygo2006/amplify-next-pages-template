@@ -22,12 +22,6 @@ export default function App() {
   }
 
 
-  function testSayHello() {
-    client.queries.sayHello({
-      name: "Amplify",
-    })
-  }
-
   useEffect(() => {
     listTodos();
   }, []);

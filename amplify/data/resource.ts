@@ -1,5 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
-import { sayHello } from "../functions/say-hello/resource";
+import { functionWithDataAccess } from '../function/data-access/resource';
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -12,16 +12,7 @@ const schema = a.schema({
     .model({
       content: a.string(),
       isDone: a.boolean()
-    }).authorization(allow => [allow.guest()]),
-      
-  sayHello: a
-    .query()
-    .arguments({
-      name: a.string(),
-    })
-    .returns(a.string())
-    .authorization(allow => [allow.guest()])
-    .handler(a.handler.function(sayHello)),
+    }).authorization(allow => [allow.owner(), allow.resource(functionWithDataAccess)]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -31,8 +22,7 @@ export const data = defineData({
   authorizationModes: {
     // This tells the data client in your app (generateClient())
     // to sign API requests with the user authentication token. 
-   // defaultAuthorizationMode: 'userPool',
-    defaultAuthorizationMode: "iam",
+    defaultAuthorizationMode: 'userPool',
   },
 });
 
