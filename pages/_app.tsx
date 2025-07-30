@@ -12,7 +12,7 @@ Amplify.configure(outputs);
 export default function App({ Component, pageProps }: AppProps) {
   return (  
     <Authenticator>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </Authenticator>
   );
 }

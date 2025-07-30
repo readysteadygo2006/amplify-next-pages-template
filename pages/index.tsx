@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
@@ -20,6 +21,13 @@ export default function App() {
     });
   }
 
+
+  function testSayHello() {
+    client.queries.sayHello({
+      name: "Amplify",
+    })
+  }
+
   useEffect(() => {
     listTodos();
   }, []);
@@ -27,6 +35,7 @@ export default function App() {
   function createTodo() {
     client.models.Todo.create({
       content: window.prompt("Todo content"),
+      isDone: true,
     });
   }
 
@@ -41,12 +50,15 @@ export default function App() {
             onClick={() => deleteTodo(todo.id)}
             key={todo.id}>
             {todo.content}
+            {'  --- '}
+            {(todo.isDone)?"true":"false"}
           </li>
         ))}
       </ul>
       <div>
       </div>
       <button onClick={signOut}>Sign out</button>
+      <Link href="/test1">Link: test1</Link>  
     </main>
   );
 }
