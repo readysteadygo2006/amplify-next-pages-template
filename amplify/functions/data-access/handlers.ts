@@ -12,8 +12,7 @@ const client = generateClient<Schema>();
 
 export const handler: Handler = async (event) => {
   const { errors: createErrors, data: newTodo } = await client.models.Todo.create({
-    name: "My new todo",
-    description: "Todo description",
+    content: "My new todo",
     isDone: false,
   })
 
