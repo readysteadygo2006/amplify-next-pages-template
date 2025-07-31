@@ -11,6 +11,8 @@ Amplify.configure(resourceConfig, libraryOptions);
 const client = generateClient<Schema>();
 
 export const handler: Handler = async (event) => {
+  console.log("event:", event);
+
   const { errors: createErrors, data: newTodo } = await client.models.Todo.create({
     content: "My new todo",
     isDone: false,
