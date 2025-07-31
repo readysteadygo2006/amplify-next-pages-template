@@ -16,8 +16,9 @@ export const handler: Handler = async (event) => {
     isDone: false,
   })
 
-
+  console.log("handler:", handler);
   const { errors: listErrors, data: todos } = await client.models.Todo.list();
+  console.log("todos:", todos);
 
   return event;
 };
