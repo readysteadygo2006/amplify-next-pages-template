@@ -12,7 +12,7 @@ const schema = a.schema({
     .model({
       content: a.string(),
       isDone: a.boolean()
-    }).authorization(allow => [allow.publicApiKey()]),
+    }).authorization(allow => [allow.authenticated()]),
 })
 .authorization(allow => [allow.resource(functionWithDataAccess)]);
 
