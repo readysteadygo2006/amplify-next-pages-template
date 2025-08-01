@@ -13,17 +13,21 @@ const client = generateClient<Schema>();
 export const handler: Handler = async (event) => {
   console.log("event:", event);
   let eventArgs = JSON.parse(event.queryStringParameters.params);
-  let eventContent = eventArgs.content; 
-  console.log("eventContent:", eventContent);
+  let objType = eventArgs.objType; 
+  let objId = eventArgs.id; 
+  let objLastGet = eventArgs.lastGet; 
+  console.log("eventArgs:", eventArgs);
 
-  const { errors: createErrors, data: newTodo } = await client.models.Todo.create({
-    content: eventContent,
-    isDone: false,
-  })
-
-  console.log("handler:", handler);
-  const { errors: listErrors, data: todos } = await client.models.Todo.list();
-  console.log("todos:", todos);
+  switch (objType) {
+    case "system":
+      const { errors: createErrors, data: newTodo } = await client.models.System.create({
+        id: objId,
+        lastGet: objLastGet,
+      });
+      break;
+    default:
+      console.log("Unknown objType:", eventArgs);
+  }
 
   return event;
 };
