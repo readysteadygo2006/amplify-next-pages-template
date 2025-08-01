@@ -15,17 +15,34 @@ export const handler: Handler = async (event) => {
   let eventArgs = JSON.parse(event.queryStringParameters.params);
   let objType = eventArgs.objType; 
   let objUId = eventArgs.uId; 
-  let objUserId = eventArgs.userId; 
   let objLastGet = eventArgs.lastGet; 
   console.log("eventArgs:", eventArgs);
 
   switch (objType) {
-    case "system":
+    case "system": {
+      let objUId = eventArgs.uId; 
+      let objUserId = eventArgs.userId; 
       const { errors: createErrors, data: newTodo } = await client.models.System.create({
         uId: objUId,
         userId: objUserId,
         lastGet: objLastGet,
-      });
+      })};
+      break;
+   case "device": {
+      let sysId = eventArgs.sysId; 
+      let objUserId = eventArgs.userId; 
+      const { errors: createErrors, data: newTodo } = await client.models.Device.create({
+        uId: objUId,
+        userId: objUserId,
+        sysId: sysId,
+        lastGet: objLastGet,
+      })};
+      break;
+   case "user": {
+      const { errors: createErrors, data: newTodo } = await client.models.User.create({
+        uId: objUId,
+        lastGet: objLastGet,
+      })};
       break;
     default:
       console.log("Unknown objType:", eventArgs);

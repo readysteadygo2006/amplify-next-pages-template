@@ -65,6 +65,8 @@ export default function App() {
             {system.uId}
             {'  --- '}
             {system.userId}
+            {'  --- '}
+            {system.lastGet}
           </li>
         ))}
       </ul>
