@@ -14,14 +14,16 @@ export const handler: Handler = async (event) => {
   console.log("event:", event);
   let eventArgs = JSON.parse(event.queryStringParameters.params);
   let objType = eventArgs.objType; 
-  let objId = eventArgs.id; 
+  let objUId = eventArgs.uId; 
+  let objUserId = eventArgs.userId; 
   let objLastGet = eventArgs.lastGet; 
   console.log("eventArgs:", eventArgs);
 
   switch (objType) {
     case "system":
       const { errors: createErrors, data: newTodo } = await client.models.System.create({
-        id: objId,
+        uId: objUId,
+        userId: objUserId,
         lastGet: objLastGet,
       });
       break;
