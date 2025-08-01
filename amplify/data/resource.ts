@@ -13,6 +13,24 @@ const schema = a.schema({
       content: a.string(),
       isDone: a.boolean()
     }).authorization(allow => [allow.authenticated()]),
+  System: a
+    .model({
+      id: a.string(),
+      userId: a.string(),
+      lastGet: a.string(),
+    }).authorization(allow => [allow.authenticated()]),
+  Device: a
+    .model({
+      id: a.string(),
+      userId: a.string(),
+      sysId: a.string(),
+      lastGet: a.string(),
+    }).authorization(allow => [allow.authenticated()]),
+  User: a
+    .model({
+      id: a.string(),
+      lastGet: a.string(),
+    }).authorization(allow => [allow.authenticated()]),
 })
 .authorization(allow => [allow.resource(functionWithDataAccess)]);
 
