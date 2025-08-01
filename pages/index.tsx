@@ -8,11 +8,16 @@ const client = generateClient<Schema>();
 
 export default function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const [systems, setSystems] = useState<Array<Schema["System"]["type"]>>([]);
     
   const { user, signOut } = useAuthenticator();
 
   function deleteTodo(id: string) {
     client.models.Todo.delete({ id })
+  }
+
+  function deleteSystem(id: string) {
+    client.models.System.delete({ id })
   }
 
   function listTodos() {
@@ -21,9 +26,16 @@ export default function App() {
     });
   }
 
+  function listSystems() {
+    client.models.System.observeQuery().subscribe({
+      next: (data) => setSystems([...data.items]),
+    });
+  }
+
 
   useEffect(() => {
-    listTodos();
+    //listTodos();
+    listSystems();
   }, []);
 
   function createTodo() {
@@ -33,19 +45,26 @@ export default function App() {
     });
   }
 
+  function createSystem() {
+    client.models.System.create({
+      uId: window.prompt("System uId"),
+      userId: window.prompt("User Id"),
+    });
+  }
+
   return (
     <main>
       <h1>User: {user?.signInDetails?.loginId}</h1>
-      <h1>My todos</h1>
-      <button onClick={createTodo}>+ new</button>
+      <h1>Systems</h1>
+      <button onClick={createSystem}>+ new</button>
       <ul>
-        {todos.map((todo) => (
+        {systems.map((system) => (
           <li 
-            onClick={() => deleteTodo(todo.id)}
-            key={todo.id}>
-            {todo.content}
+            onClick={() => deleteSystem(system.id)}
+            key={system.id}>
+            {system.uId}
             {'  --- '}
-            {(todo.isDone)?"true":"false"}
+            {system.userId}
           </li>
         ))}
       </ul>
